@@ -3,6 +3,7 @@ name = "pokedex"
 version = "0.1.0"
 authors = ["Alexis Lozano <alexis.pascal.lozano@gmail.com>"]
 edition = "2021"
+include = ["swagger"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

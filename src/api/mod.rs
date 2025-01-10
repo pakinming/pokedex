@@ -3,8 +3,10 @@ mod delete_pokemon;
 mod fetch_all_pokemons;
 mod fetch_pokemon;
 mod health;
+mod bmi;
 
 use crate::repositories::pokemon::Repository;
+use std::fs::File;
 use std::sync::Arc;
 
 pub fn serve(url: &str, repo: Arc<dyn Repository>) {
@@ -24,6 +26,15 @@ pub fn serve(url: &str, repo: Arc<dyn Repository>) {
             },
             (DELETE) (/{number: u16}) => {
                 delete_pokemon::serve(repo.clone(), number)
+            },
+            (POST) (/bmi) => {
+                bmi::serve(req)
+            },
+            (GET) (/bmi-swagger) => {
+
+                let file = File::open("./src/bmi-openapi.swagger.yml").unwrap();
+                rouille::Response::from_file("multipart/form-data",file)
+
             },
             _ => {
                 rouille::Response::from(Status::NotFound)

@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: BMI Calculator API
+  description: API สำหรับการคำนวณ BMI (Body Mass Index) โดยใช้น้ำหนักและความสูง
+  version: 1.0.0
+  contact:
+    name: Developer
+    email: rust@develop
+
+servers:
+  - url: http://localhost:8080
+    description: Development server
+
+paths:
+  /bmi:
+    post:
+      summary: คำนวณค่า BMI จากน้ำหนักและความสูง
+      description: คำนวณ BMI โดยรับข้อมูลน้ำหนักและความสูงจากผู้ใช้และส่งผลลัพธ์ออกมา
+      operationId: calculateBMI
+      requestBody:
+        description: ข้อมูลที่จำเป็นในการคำนวณ BMI
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                weight:
+                  type: number
+                  format: float
+                  description: น้ำหนักของผู้ใช้ในหน่วยกิโลกรัม
+                height:
+                  type: number
+                  format: float
+                  description: ความสูงของผู้ใช้ในหน่วยเมตร
+              required:
+                - weight
+                - height
+      responses:
+        '200':
+          description: การคำนวณ BMI สำเร็จ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bmi:
+                    type: number
+                    format: float
+                    description: ค่าของ BMI ที่คำนวณได้
+        '400':
+          description: ข้อมูลไม่ถูกต้องหรือไม่ครบถ้วน
+        '500':
+          description: ข้อผิดพลาดภายในเซิร์ฟเวอร์
